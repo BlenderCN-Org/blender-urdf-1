@@ -17,6 +17,11 @@
 #    Free Software Foundation, Inc.,                                       #
 #    59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             #
 ############################################################################
+#import roslib
+#import rospy
+from urdf_parser_py.urdf import URDF
 
 def load(operator, context, filepath = ""):
-  return {"FINISHED"}
+	robot = URDF.from_xml_file(filepath)
+	print(robot)
+	return {"FINISHED"}
