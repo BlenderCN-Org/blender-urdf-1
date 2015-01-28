@@ -59,9 +59,9 @@ class ImportURDF(bpy.types.Operator, ImportHelper):
 
   def execute(self, context):
     keywords = self.as_keywords()
-    
+       
     from . import import_urdf
-    return import_urdf.load(self, context, **keywords)
+    return import_urdf.load(self, context, keywords['filepath'])
   
 
 class ImportURDFXacro(bpy.types.Operator, ImportHelper):
