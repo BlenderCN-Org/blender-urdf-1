@@ -28,8 +28,8 @@ import copy
 #from morse.builder import bpymorse
 # roslib
 # rospy
-from io_scene_urdf.urdf_parser.urdf import URDF
-from io_scene_urdf.urdf_components.armature import URDFArmature
+from urdf_parser.urdf import URDF
+from urdf_components.armature import URDFArmature
 
 
 def load(operator, context, filepath = ""):

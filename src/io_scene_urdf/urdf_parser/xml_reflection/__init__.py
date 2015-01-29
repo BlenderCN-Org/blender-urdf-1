@@ -1,2 +1,2 @@
-from io_scene_urdf.urdf_parser.xml_reflection.core import *
+from urdf_parser.xml_reflection.core import *
 

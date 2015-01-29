@@ -1,5 +1,5 @@
-from io_scene_urdf.urdf_parser.xml_reflection.basics import *
-import io_scene_urdf.urdf_parser.xml_reflection as xmlr
+from urdf_parser.xml_reflection.basics import *
+import urdf_parser.xml_reflection as xmlr
 
 # Add a 'namespace' for names so that things don't conflict between URDF and SDF?
 # A type registry? How to scope that? Just make a 'global' type pointer?

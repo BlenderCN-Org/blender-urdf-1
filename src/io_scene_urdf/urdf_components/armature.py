@@ -1,7 +1,7 @@
 import bpy, math
 from mathutils import Vector, Matrix, Euler
 import copy
-from io_scene_urdf.urdf_components.joint import URDFJoint
+from urdf_components.joint import URDFJoint
 
 class URDFArmature:
 

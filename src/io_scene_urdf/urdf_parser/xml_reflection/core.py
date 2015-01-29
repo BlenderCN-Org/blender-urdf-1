@@ -1,4 +1,4 @@
-from io_scene_urdf.urdf_parser.xml_reflection.basics import *
+from urdf_parser.xml_reflection.basics import *
 import sys
 import copy
 
