@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- DATA SOURCES -->
+    <property name="base_mass" value="116.0" />
+
+    <!-- The xacro macro xacro:miror_base contains: base, ptu and hokuyo -->
+    <xacro:macro name="miror_base" params="name">
+    
+    <!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin,
+         navigation stack dedpends on this frame -->
+    <!--
+    <link name="${name}_footprint">
+        <inertial>
+            <mass value="1.0" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+            <geometry>
+                <box size="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link>
+    -->
+
+    <link name="${name}_link">
+        <inertial>
+            <mass value="${base_mass}" />
+            <origin xyz="0 0 0.273" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />  
+            <geometry>
+                <mesh filename="package://miror_description/meshes/freehex.stl"/>
+                <!--<cylinder radius="0.1" length="0.1"/>-->
+            </geometry> 
+            <material name="Grey"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="${base_radius}" length="${base_height}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--
+    <joint name="${name}_footprint_joint" type="fixed">
+        <origin xyz="${base_x} ${base_y} ${base_z}" rpy="${base_roll} ${base_pitch} ${base_yaw}" />
+        <child link="${name}_link" />
+        <parent link="${name}_footprint"/>
+    </joint>
+    -->
+
+
+  </xacro:macro>
+
+
+</robot>

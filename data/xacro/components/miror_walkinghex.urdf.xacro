@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- DATA SOURCES -->
+    <property name="base_mass" value="116.0" />
+    <property name="upper_leg_mass" value="10.0"/>
+    <property name="lower_leg_mass" value="10.0"/>
+
+
+    <!-- The xacro macro xacro:miror_base contains: base, ptu and hokuyo -->
+    <xacro:macro name="miror_base" params="name">
+    
+    <!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin,
+         navigation stack dedpends on this frame -->
+    <!--link name="${name}_footprint">
+        <inertial>
+            <mass value="1.0" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.01 0.01 0.01" />
+            </geometry>
+            <material name="Red" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.1" rpy="0 0 0" />
+            <geometry>
+                <box size="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+    </link-->
+
+    <link name="${name}_link">
+        <inertial>
+            <mass value="${base_mass}" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />  
+            <geometry>
+                <mesh filename="package://miror_description/meshes/top_plate.stl"/>
+            </geometry> 
+            <material name="Grey"/>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://miror_description/meshes/top_plate.stl"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--joint name="${name}_footprint_joint" type="fixed">
+        <origin xyz="${base_x} ${base_y} ${base_z}" rpy="${base_roll} ${base_pitch} ${base_yaw}" />
+        <child link="${name}_link" />
+        <parent link="${name}_footprint"/>
+    </joint-->
+
+    <xacro:miror_leg name="miror_leg1">
+    </xacro:miror_leg>
+    <joint name="miror_leg1_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg1_upper_link"/>
+    </joint>
+
+    <xacro:miror_leg name="miror_leg2">
+    </xacro:miror_leg>
+    <joint name="miror_leg2_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg2_upper_link"/>
+    </joint>
+    
+    <xacro:miror_leg name="miror_leg3">
+    </xacro:miror_leg>
+    <joint name="miror_leg3_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg3_upper_link"/>
+    </joint>
+    
+    <xacro:miror_leg name="miror_leg4">
+    </xacro:miror_leg>
+    <joint name="miror_leg4_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg4_upper_link"/>
+    </joint>
+    
+    <xacro:miror_leg name="miror_leg5">
+    </xacro:miror_leg>
+    <joint name="miror_leg5_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg5_upper_link"/>
+    </joint>
+    
+    <xacro:miror_leg name="miror_leg6">
+    </xacro:miror_leg>
+    <joint name="miror_leg6_upper_joint" type="fixed">
+        <parent link="${name}_link"/>
+        <child link="miror_leg6_upper_link"/>
+    </joint>
+
+
+  </xacro:macro>
+  
+  
+  
+  <xacro:macro name="miror_leg" params="name">
+    <link name="${name}_upper_link">
+        <inertial>
+            <mass value="${upper_leg_mass}" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />  
+            <geometry>
+                <mesh filename="package://miror_description/meshes/upper_leg.stl"/>
+            </geometry> 
+            <material name="Grey"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://miror_description/meshes/upper_leg.stl"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="${name}_lower_link">
+        <inertial>
+            <mass value="${lower_leg_mass}" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                     iyy="0.01" iyz="0.0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />  
+            <geometry>
+                <mesh filename="package://miror_description/meshes/lower_leg.stl"/>
+            </geometry> 
+            <material name="Grey"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://miror_description/meshes/lower_leg.stl"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="${name}_lower_joint" type="fixed">
+        <parent link="${name}_upper_link"/>
+        <child link="${name}_lower_link"/>
+    </joint>
+    
+    
+    
+    <link name="${name}_foot_link"/>
+    <joint name="${name}_foot_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="${name}_foot_link"/>
+    </joint>
+
+  </xacro:macro>
+  
+  
+
+
+</robot>

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="miror_minirobomach" >
+  
+  <!-- common stuff -->
+  <include filename="$(find miror_description)/urdf/common.xacro" />
+  <include filename="$(find miror_description)/urdf/materials.urdf.xacro" />
+  <include filename="$(find miror_description)/urdf/miror_calibration.urdf.xacro" />
+  
+  <!-- base -->
+  <include filename="$(find miror_description)/urdf/components/miror_walkinghex.urdf.xacro" />
+  
+  <!-- spindle -->
+  <include filename="$(find miror_description)/urdf/components/miror_spindle.urdf.xacro" />
+
+  <!-- ptu with hokuyo -->
+  <include filename="$(find miror_description)/urdf/components/miror_ptu.urdf.xacro" />
+  
+  <!-- fisheyecam -->
+  <include filename="$(find miror_description)/urdf/components/miror_fisheyecam.urdf.xacro" />
+  
+  <!-- laserstripe -->
+  <include filename="$(find miror_description)/urdf/components/miror_laserstripe.urdf.xacro" />
+  
+  <!-- calibrationcam -->
+  <include filename="$(find miror_description)/urdf/components/miror_calibrationcam.urdf.xacro" />
+  
+  <!-- arm -->
+  <include filename="$(find miror_description)/urdf/components/miror_snakearm.urdf.xacro" />
+  
+  <!-- tipcam -->
+  <include filename="$(find miror_description)/urdf/components/miror_tipcam.urdf.xacro" />
+
+  
+  <!-- composition of the robot -->
+  <xacro:miror_base name="base"/>
+  
+  <!-- Spindle -->
+  <xacro:miror_spindle name="spindle" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_spindle>
+  
+  <!-- PTU with Hokuyo -->
+  <xacro:miror_ptu name="dynamixel" parent="base_link">
+  </xacro:miror_ptu>
+  
+  <!-- Fisheyecam -->
+  <xacro:miror_fisheyecam name="fisheyecam" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_fisheyecam>
+  
+  <!-- Laserstripe -->
+  <xacro:miror_laserstripe name="laserstripe" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_laserstripe>
+  
+  <!-- Calibrationcams -->
+  <xacro:miror_calibrationcam name="calibrationcam_1" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_calibrationcam>
+  <xacro:miror_calibrationcam name="calibrationcam_2" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_calibrationcam>
+  <xacro:miror_calibrationcam name="calibrationcam_3" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_calibrationcam>
+  
+  <!-- Snakearm -->
+  <xacro:miror_snakearm name="arm" parent="base_link"/>
+  
+  <!-- Tipcam -->
+  <xacro:miror_tipcam name="tipcam" parent="arm_tip_link">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:miror_tipcam>
+
+  
+</robot>

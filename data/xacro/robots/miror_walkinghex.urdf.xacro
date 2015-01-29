@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="miror_walkinghex" >
+  
+  <!-- common stuff -->
+  <include filename="$(find miror_description)/urdf/common.xacro" />
+  <include filename="$(find miror_description)/urdf/materials.urdf.xacro" />
+  <include filename="$(find miror_description)/urdf/miror_calibration.urdf.xacro" />
+  
+  <!-- base -->
+  <include filename="$(find miror_description)/urdf/components/miror_walkinghex.urdf.xacro" />
+
+  <!-- ptu with hokuyo -->
+  <include filename="$(find miror_description)/urdf/components/miror_ptu.urdf.xacro" />
+
+  
+  <!-- composition of the robot -->
+  <xacro:miror_base name="base"/>
+  
+  <!-- PTU with Hokuyo -->
+  <xacro:miror_ptu name="dynamixel" parent="base_link">
+  </xacro:miror_ptu>
+
+  
+</robot>

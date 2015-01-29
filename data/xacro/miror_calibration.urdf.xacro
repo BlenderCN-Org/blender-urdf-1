@@ -1,0 +1,74 @@
+<?xml version="1.0" ?><robot>
+	<!-- ***************** -->
+	<!-- base calibration -->
+	<!-- ***************** -->
+	<property name="base_x" value="0.0"/>
+	<property name="base_y" value="0.0"/>
+	<property name="base_z" value="0.27339"/>
+	
+	<property name="base_roll" value="0.0"/>
+	<property name="base_pitch" value="0.0"/>
+	<property name="base_yaw" value="0.0"/>
+	
+	<property name="base_radius" value="0.1656" />
+	<property name="base_height" value="0.32939" />
+	
+	
+	<!-- ***************** -->
+	<!-- ptu calibration -->
+	<!-- ***************** -->
+	<!-- with respect to freehex_base_link -->
+	<property name="ptu_x" value="0.1299"/>
+	<property name="ptu_y" value="0.075"/>
+	<property name="ptu_z" value="0.03525"/>
+	
+	<property name="ptu_roll" value="${M_PI}"/>
+	<property name="ptu_pitch" value="0.0"/>
+	<property name="ptu_yaw" value="2.09"/>		<!-- 120 ° -->
+	
+	<!-- with respect to ptu_link -->
+	<property name="ptu_tilt_x" value="0.0"/>
+	<property name="ptu_tilt_y" value="0.0"/>
+	<property name="ptu_tilt_z" value="0.02325"/>
+	
+	<property name="ptu_tilt_roll" value="0.0"/>
+	<property name="ptu_tilt_pitch" value="0.0"/>
+	<property name="ptu_tilt_yaw" value="0.0"/>
+
+	<!-- ***************** -->
+	<!-- hokuyo calibration -->
+	<!-- ***************** -->
+	<!-- with respect to ptu_link -->
+	<property name="hokuyo_x" value="0.0"/>
+	<property name="hokuyo_y" value="-0.0301"/>
+	<property name="hokuyo_z" value="0.0323"/>
+	
+	<property name="hokuyo_roll" value="-${M_PI_2}"/>
+	<property name="hokuyo_pitch" value="0.0"/>
+	<property name="hokuyo_yaw" value="0.0"/>
+	
+	<!-- with respect to hokuyo_link -->
+	<property name="hokuyo_frame_x" value="0.0"/>
+	<property name="hokuyo_frame_y" value="0.0"/>
+	<property name="hokuyo_frame_z" value="0.069"/>
+	
+	<property name="hokuyo_frame_roll" value="0.0"/>
+	<property name="hokuyo_frame_pitch" value="0.0"/>
+	<property name="hokuyo_frame_yaw" value="0.0"/>
+	
+	<!-- ***************** -->
+	<!-- snake_arm calibration -->
+	<!-- ***************** -->
+	<!-- with respect to freehex_base_link -->
+	<property name="arm_base_x" value="0.0"/>
+	<property name="arm_base_y" value="0.0"/>
+	<property name="arm_base_z" value="0.05475"/>
+	
+	<property name="arm_base_roll" value="0.0"/>
+	<property name="arm_base_pitch" value="0.0"/>
+	<property name="arm_base_yaw" value="0.0"/>
+	
+	<property name="tcp_size" value="0.05"/>
+
+
+</robot>

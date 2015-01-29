@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       name="miror_snakearm" >
+  
+  <!-- common stuff -->
+  <include filename="$(find miror_description)/urdf/common.xacro" />
+  <include filename="$(find miror_description)/urdf/materials.urdf.xacro" />
+  <include filename="$(find miror_description)/urdf/miror_calibration.urdf.xacro" />
+  
+  <!-- arm -->
+  <include filename="$(find miror_description)/urdf/components/miror_snakearm.urdf.xacro" />
+
+  
+  <!-- composition of the robot -->
+  <link name="base_link"/>
+  
+  <xacro:miror_snakearm name="arm" parent="base_link"/>
+
+  
+</robot>

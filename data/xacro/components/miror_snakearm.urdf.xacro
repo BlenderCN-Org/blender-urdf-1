@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- DATA SOURCES -->
+
+
+    <!-- The xacro macro xacro:miror_base contains: base, ptu and hokuyo -->
+    <xacro:macro name="miror_snakearm_stage" params="name stage">
+        <xacro:miror_snakearm_section_link name="${name}_${stage}_sec01">
+        </xacro:miror_snakearm_section_link>
+        
+        <xacro:miror_snakearm_joint name="${name}_${stage}_sec01" parent="${name}_${stage}_sec01_link" child="${name}_${stage}_sec02_link">
+        </xacro:miror_snakearm_joint>
+
+        <xacro:miror_snakearm_section_link name="${name}_${stage}_sec02">
+        </xacro:miror_snakearm_section_link>
+
+        <xacro:miror_snakearm_joint name="${name}_${stage}_sec02" parent="${name}_${stage}_sec02_link" child="${name}_${stage}_sec03_link">
+        </xacro:miror_snakearm_joint>
+
+        <xacro:miror_snakearm_section_link name="${name}_${stage}_sec03">
+        </xacro:miror_snakearm_section_link>
+    </xacro:macro>
+  
+  
+    <xacro:macro name="miror_snakearm_section_link" params="name">
+        <!--<link name="${name}_link"/>-->
+        
+        <link name="${name}_link">
+            <inertial>
+                <mass value="0.01" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                         iyy="0.01" iyz="0.0" izz="0.01" />
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />  
+                <geometry>
+                    <mesh filename="package://miror_description/meshes/snakearm_disc.stl"/>
+                </geometry> 
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://miror_description/meshes/snakearm_disc.stl"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+    
+    
+    <xacro:macro name="miror_snakearm_joint" params="name parent child">
+        <joint name="${name}_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${child}"/>
+        </joint>
+    </xacro:macro>
+  
+  
+<!--
+    <xacro:macro name="miror_snakearm_segment" params="name parent">
+        <link name="arm_${stage}_${section}_${segment}_link"/>  
+    </xacro:macro>
+-->
+
+
+
+    <xacro:macro name="miror_snakearm" params="name parent">
+        <link name="${name}_base_link"/>
+        
+        <joint name="${name}_base_joint" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${name}_base_link"/>
+        </joint>
+        
+        <joint name="${name}_stg00_sec00_joint" type="fixed">
+            <parent link="${name}_base_link"/>
+            <child link="${name}_stg01_sec01_link"/>
+            <!--origin xyz="${arm_base_x} ${arm_base_y} ${arm_base_z}" rpy="${arm_base_roll} ${arm_base_pitch} ${arm_base_yaw}" /-->
+        </joint>
+      
+        <xacro:miror_snakearm_stage name="${name}" stage="stg01">
+        </xacro:miror_snakearm_stage>
+        
+        <xacro:miror_snakearm_joint name="${name}_stg01_sec03" parent="${name}_stg01_sec03_link" child="${name}_stg02_sec01_link">
+        </xacro:miror_snakearm_joint>
+        
+        <xacro:miror_snakearm_stage name="${name}" stage="stg02">
+        </xacro:miror_snakearm_stage>
+        
+        <xacro:miror_snakearm_joint name="${name}_stg02_sec03" parent="${name}_stg02_sec03_link" child="${name}_stg03_sec01_link">
+        </xacro:miror_snakearm_joint>
+        
+        <xacro:miror_snakearm_stage name="${name}" stage="stg03">
+        </xacro:miror_snakearm_stage>
+        
+        <xacro:miror_snakearm_joint name="${name}_stg03_sec03" parent="${name}_stg03_sec03_link" child="${name}_stg04_sec01_link">
+        </xacro:miror_snakearm_joint>
+        
+        <xacro:miror_snakearm_stage name="${name}" stage="stg04">
+        </xacro:miror_snakearm_stage>
+        
+        <xacro:miror_snakearm_joint name="${name}_stg04_sec03" parent="${name}_stg04_sec03_link" child="${name}_tip_link">
+        </xacro:miror_snakearm_joint>
+        
+        <link name="${name}_tip_link"/>
+        <!--<link name="${name}_tip_link">
+            <inertial>
+                <mass value="0.4" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                         iyy="0.01" iyz="0.0" izz="0.01" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />  
+                <geometry>
+                    <mesh filename="package://miror_description/meshes/snakearm_tip.stl"/>
+                </geometry> 
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://miror_description/meshes/snakearm_tip.stl"/>
+                </geometry>
+            </collision>
+        </link>-->
+        
+    </xacro:macro>
+
+
+
+</robot>

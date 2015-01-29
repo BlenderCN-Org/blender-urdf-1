@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- DATA SOURCES -->
+    <include filename="$(find miror_description)/urdf/components/miror_hokuyo.urdf.xacro" />
+
+
+    <xacro:macro name="miror_ptu" params="name parent">
+
+        <link name="${name}_link">
+            <inertial>
+                <mass value="1.0" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                         iyy="0.01" iyz="0.0" izz="0.01" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 ${M_PI_2} 0" />
+                <geometry>
+                    <mesh filename="package://miror_description/meshes/dynamixel.stl"/>
+                </geometry>
+                <material name="Grey"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0.1" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="${name}_flange_link">
+            <inertial>
+                <mass value="1.0" />
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+                         iyy="0.01" iyz="0.0" izz="0.01" />
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />  
+                <geometry>
+                    <!--<mesh filename="package://miror_description/meshes/tilt_plate.stl"/>-->
+                    <box size="0.06 0.06 0.005"/>
+                </geometry> 
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${name}_joint" type="fixed">
+            <origin xyz="${ptu_x} ${ptu_y} ${ptu_z}" rpy="${ptu_roll} ${ptu_pitch} ${ptu_yaw}" />
+            <child link="${name}_link" />
+            <parent link="${parent}"/>
+        </joint>
+       
+        <joint name="${name}_tilt_joint" type="revolute">
+            <origin xyz="${ptu_tilt_x} ${ptu_tilt_y} ${ptu_tilt_z}" rpy="${ptu_tilt_roll} ${ptu_tilt_pitch} ${ptu_tilt_yaw}" />
+            <parent link="${name}_link"/>
+            <child link="${name}_flange_link" />
+            <axis xyz="0 0 1"/>
+            <dynamics damping="10" />
+            <limit effort="200" velocity="1.9634" lower="-2.9670" upper="2.9670"/>
+            <safety_controller k_position="20" k_velocity="50" soft_lower_limit="${-2.9670 + 0.01}" soft_upper_limit="${2.9670 - 0.01}" />
+        </joint>
+
+        <!-- Hokuyo -->
+        <xacro:miror_hokuyo name="hokuyo" parent="${name}_flange_link">
+            <origin xyz="${hokuyo_x} ${hokuyo_y} ${hokuyo_z}" rpy="${hokuyo_roll} ${hokuyo_pitch} ${hokuyo_yaw}" />
+        </xacro:miror_hokuyo>
+
+    </xacro:macro>
+
+
+</robot>
