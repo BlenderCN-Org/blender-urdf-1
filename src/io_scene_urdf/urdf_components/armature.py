@@ -16,7 +16,11 @@ class URDFArmature:
 
 
     def _walk_urdf(self, link, parent_bone = None):
-
+        ''' Recursively build up bone structure starting from base link
+        Input: parent_link, parent_bone
+        Output: List of URDFJoints (bones) defined by the joint and its child_link
+        (A bone is made up of a joint and its child_link)
+        '''
         bones = []
         for joint, child_link in self._get_urdf_connections(link):
             if parent_bone:
@@ -33,8 +37,9 @@ class URDFArmature:
         return bones
 
     def _get_urdf_connections(self, link):
-        ''' 
-
+        ''' Find joint and child link of the provided link
+        Input: link <Type: URDFLink>
+        Output: (joint, child_link) (<Type: URDFJoint>, <Type: URDFLink>)
         '''
         joints = [joint for joint in self.urdf.joints if joint.parent == link.name]
         return [(joint, self.urdf.link_map[joint.child]) for joint in joints]
