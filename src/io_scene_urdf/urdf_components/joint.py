@@ -118,14 +118,22 @@ class URDFJoint:
         # different places: corresponding Blender bones may not be "visually"
         # connected.
 
+        # If this is the end joint 
+
+        '''
+        IMPORTANT NOTE: double check the method of computing parent tail / children's head.
+        Whether to use self.rot or parent.rot
+
+        '''
         if not self.children and self.type == self.FIXED:
             print("Processing %s as a static frame at the end of the armature. Do not create bone for it" % self.name)
             return
 
         print("Building %s..." % self.name)
+        # Add new bone 
         self.editbone = armature.data.edit_bones.new(self.name)
 
-        if parent:
+        if parent: # If this is not the base joint
             self.editbone.use_inherit_rotation = True
             self.editbone.parent = parent.editbone
 
@@ -133,11 +141,15 @@ class URDFJoint:
 
                 # this joint is the only child of the parent joint: connect
                 # them with parent's tail
-                parent.editbone.tail = self.rot * self.xyz + parent.editbone.head
+                # parent.editbone.tail = self.rot * self.xyz + parent.editbone.head ???????????????????????????
+                parent.editbone.tail = parent.rot * self.xyz + parent.editbone.head
+
+
                 self.editbone.use_connect = True
             else:
-                self.editbone.head = self.rot * self.xyz + parent.editbone.head
-
+                print('DEBUG:::::::Joint ' + self.name + ' has %d children', len(parent.children)    )
+                # self.editbone.head = self.rot * self.xyz + parent.editbone.head  ??????????????????????????????????????????
+                self.editbone.head = parent.rot * self.xyz + parent.editbone.head    
         else:
             self.editbone.head = (0, 0, 0)
 

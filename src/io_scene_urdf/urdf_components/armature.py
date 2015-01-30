@@ -10,7 +10,7 @@ class URDFArmature:
 
         self.name = name
         self.urdf = urdf
-
+        # Lists of bones 
         self.roots = self._walk_urdf(self.urdf.link_map[urdf.get_root()])
         print('DEBUG:::::::::::::::::::' + self.name)
 
