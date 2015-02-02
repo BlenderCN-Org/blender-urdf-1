@@ -33,8 +33,8 @@ from io_scene_urdf.urdf_components.armature import URDFArmature
 
 
 def load(operator, context, filepath = ""):
-	robot = URDF.from_xml_file(filepath)
-	#print(filepath)
+	robot = URDF.load_from_file(filepath)
+	print(filepath)
 	print(robot)
 	armature = URDFArmature("nao", robot)
 	armature.build()
