@@ -30,15 +30,19 @@ import copy
 # rospy
 from io_scene_urdf.urdf_parser.urdf import URDF
 from io_scene_urdf.urdf_components.armature import URDFArmature
+from io_scene_urdf.urdf_components.link import URDFLink
 
 
 def load(operator, context, filepath = ""):
 	robot = URDF.load_from_file(filepath)
 	print(filepath)
 	print(robot)
-	armature = URDFArmature("nao", robot)
+
+	
+	armature = URDFArmature(robot)
 	armature.build()
-	print('finished')
+
+	
 	return {"FINISHED"}
 
 

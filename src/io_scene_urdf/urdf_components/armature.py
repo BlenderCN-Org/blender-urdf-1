@@ -2,17 +2,19 @@ import bpy, math
 from mathutils import Vector, Matrix, Euler
 import copy
 from io_scene_urdf.urdf_components.joint import URDFJoint
-
+from io_scene_urdf.urdf_components.link import URDFLink
 class URDFArmature:
 
-    def __init__(self, name, urdf):
+    def __init__(self, urdf):
 
 
-        self.name = name
+        self.name = urdf.name
         self.urdf = urdf
+        self.links = []
+        self.joints = []
         # Lists of bones 
-        self.roots = self._walk_urdf(self.urdf.link_map[urdf.get_root()])
-        print('DEBUG:::::::::::::::::::' + self.name)
+        #self.roots = self._walk_urdf(self.urdf.link_map[urdf.get_root()])
+        
 
 
     def _walk_urdf(self, link, parent_bone = None):
@@ -46,22 +48,25 @@ class URDFArmature:
 
 
     def build(self):
-        # Create armature and object
-        bpy.ops.object.add(
-            type='ARMATURE', 
-            enter_editmode=True,
-            location=(0,0,0))
-        ob = bpy.context.object
-        ob.show_x_ray = True
-        ob.name = self.name
-        amt = ob.data
-        amt.name = self.name+'_armature'
-        amt.show_axes = True
+        # # Create armature and object
+        # bpy.ops.object.add(
+        #     type='ARMATURE', 
+        #     enter_editmode=True,
+        #     location=(0,0,0))
+        # ob = bpy.context.object
+        # ob.show_x_ray = True
+        # ob.name = self.name
+        # amt = ob.data
+        # amt.name = self.name+'_armature'
+        # amt.show_axes = True
 
-        bpy.ops.object.mode_set(mode='EDIT')
-        for root in self.roots:
-            root.build_editmode(ob)
+        # bpy.ops.object.mode_set(mode='EDIT')
+        # for root in self.roots:
+        #     root.build_editmode(ob)
 
-        bpy.ops.object.mode_set(mode='OBJECT')
-        for root in self.roots:
-            root.build_objectmode(ob)
+        # bpy.ops.object.mode_set(mode='OBJECT')
+        # for root in self.roots:
+        #     root.build_objectmode(ob)
+        for link in self.urdf.links:
+            self.links.append(URDFLink(link))
+
