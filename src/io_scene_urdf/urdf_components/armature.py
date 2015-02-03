@@ -11,9 +11,17 @@ class URDFArmature:
         self.name = urdf.name
         self.urdf = urdf
         self.links = []
-        self.joints = []
-        # Lists of bones 
-        #self.roots = self._walk_urdf(self.urdf.link_map[urdf.get_root()])
+        # Lists of joints, and their children
+        self.joints = [] 
+        try:
+            print('Establishing joints/links dependency...')
+            self.base_link = self.urdf.link_map[urdf.get_root()]
+            self.joints = self._walk_urdf(self.base_link)
+        except:
+            print('Multiple roots detected, no joints will be created')
+            pass
+
+        
         
 
 
@@ -44,7 +52,8 @@ class URDFArmature:
         Output: (joint, child_link) (<Type: URDFJoint>, <Type: URDFLink>)
         '''
         joints = [joint for joint in self.urdf.joints if joint.parent == link.name]
-        return [(joint, self.urdf.link_map[joint.child]) for joint in joints]
+        for joint in joints
+            URDFJoint(joint, self.urdf.link_map[joint.child]) for joint in joints]
 
 
     def build(self):
