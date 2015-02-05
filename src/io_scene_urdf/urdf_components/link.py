@@ -6,8 +6,6 @@ class URDFLink:
 	def __init__(self, urdf_link):
 
 		self.name = urdf_link.name
-		print('DEBUG:::::::::::::::::::' + self.name)
-
 		self.inertial = urdf_link.inertial
 		self.visual = urdf_link.visual
 		self.collision = urdf_link.collision

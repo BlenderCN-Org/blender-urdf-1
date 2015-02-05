@@ -13,32 +13,21 @@ class URDFArmature:
         self.links = []
         # Lists of joints, and their children
         self.joints = [] 
-        try:
-            print('Establishing joints/links dependency...')
-            self.base_link = self.urdf.link_map[urdf.get_root()]
-            self.joints = self._walk_urdf(self.base_link)
-        except:
-            print('Multiple roots detected, no joints will be created')
-            pass
 
-        
-        
-
-
-    def _walk_urdf(self, link, parent_bone = None):
+    def _walk_urdf(self, link, parent_joint = None):
         ''' Recursively build up bone structure starting from base link
         Input: parent_link, parent_bone
         Output: List of URDFJoints (bones) defined by the joint and its child_link
         (A bone is made up of a joint and its child_link)
         '''
         bones = []
-        for joint, child_link in self._get_urdf_connections(link):
-            if parent_bone:
+        for joint in self._get_urdf_connections(link):
+            if parent_joint:
                 # be careful: if joint is a zero-length joint,
                 # it gets merged into parent bone (because Blender does not
                 # support 0-length joints)! so bone and parent_bone
                 # may be equal.
-                bone = parent_bone.add_child(joint, child_link)
+                bone = parent_joint.add_child(joint, child_link)
             else:
                 bone = URDFJoint(joint, child_link)
 
@@ -51,10 +40,11 @@ class URDFArmature:
         Input: link <Type: URDFLink>
         Output: (joint, child_link) (<Type: URDFJoint>, <Type: URDFLink>)
         '''
+        joint_list = []
         joints = [joint for joint in self.urdf.joints if joint.parent == link.name]
-        for joint in joints
-            URDFJoint(joint, self.urdf.link_map[joint.child]) for joint in joints]
-
+        for joint in joints:
+            joint_list.append(URDFJoint(joint, self.urdf.link_map[joint.child]))
+        return  joint_list 
 
     def build(self):
         # # Create armature and object
@@ -76,6 +66,36 @@ class URDFArmature:
         # bpy.ops.object.mode_set(mode='OBJECT')
         # for root in self.roots:
         #     root.build_objectmode(ob)
+
+        # Find all links
         for link in self.urdf.links:
             self.links.append(URDFLink(link))
+        # Find all joints and their corresponding parents and childs
+        for joint in self.urdf.joints:
+            self.joints.append(URDFJoint(joint, self.urdf))
+        # Put the joints and links together
+        ### Start with the base link, if there is multiple roots, do nothing
+        try: 
+            print('Establishing joints/links dependency...')
+            self.base_link = self.urdf.link_map[self.urdf.get_root()]
+            
+        except:s
+            print('Multiple roots detected, robot will not be built, exiting...')
+            pass
+        # Create an armature at base link
+        
+        # Find its child joint
+
+        # Create a bone
+
+        # Find its child link
+
+        # Place the link origin at the joint
+
+
+
+
+
+
+
 
