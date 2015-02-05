@@ -24,6 +24,9 @@ class URDFLink:
 		if self.collision:
 			self.build_collision()
 
+		# # Add bones
+		# self.bone = armature.data.edit_bones.new(self.name + '_bone')
+
 		#print("Link %s at %s" % (self.name, self.xyz))
 
 	def _get_origin(self):

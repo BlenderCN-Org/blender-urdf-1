@@ -13,6 +13,14 @@ class URDFArmature:
         self.links = []
         # Lists of joints, and their children
         self.joints = [] 
+        self.root_link = None
+        # Find all links
+        for link in self.urdf.links:
+            self.links.append(URDFLink(link))
+        # # Find all joints and their corresponding parents and childs
+        # for joint in self.urdf.joints:
+        #     self.joints.append(URDFJoint(joint, self.urdf))
+        
 
     def _walk_urdf(self, link, parent_joint = None):
         ''' Recursively build up bone structure starting from base link
@@ -47,17 +55,7 @@ class URDFArmature:
         return  joint_list 
 
     def build(self):
-        # # Create armature and object
-        # bpy.ops.object.add(
-        #     type='ARMATURE', 
-        #     enter_editmode=True,
-        #     location=(0,0,0))
-        # ob = bpy.context.object
-        # ob.show_x_ray = True
-        # ob.name = self.name
-        # amt = ob.data
-        # amt.name = self.name+'_armature'
-        # amt.show_axes = True
+       
 
         # bpy.ops.object.mode_set(mode='EDIT')
         # for root in self.roots:
@@ -67,24 +65,44 @@ class URDFArmature:
         # for root in self.roots:
         #     root.build_objectmode(ob)
 
-        # Find all links
-        for link in self.urdf.links:
-            self.links.append(URDFLink(link))
-        # Find all joints and their corresponding parents and childs
-        for joint in self.urdf.joints:
-            self.joints.append(URDFJoint(joint, self.urdf))
         # Put the joints and links together
         ### Start with the base link, if there is multiple roots, do nothing
         try: 
             print('Establishing joints/links dependency...')
-            self.base_link = self.urdf.link_map[self.urdf.get_root()]
+            self.root_link = self.urdf.link_map[self.urdf.get_root()]
             
-        except:s
+        except:
             print('Multiple roots detected, robot will not be built, exiting...')
-            pass
+            return 
         # Create an armature at base link
-        
-        # Find its child joint
+        bpy.ops.object.add(
+            type='ARMATURE', 
+            enter_editmode=True,
+            location=(0,0,0))
+        ob = bpy.context.object
+        ob.show_x_ray = True
+        ob.name = self.name
+        armature = ob.data
+        armature.name = self.name+'_armature'
+        armature.show_axes = True
+
+        bpy.ops.object.mode_set(mode='EDIT')
+
+        temp_list = []
+        temp_list.append(self.root_link) 
+        while len(temp_list)>0:
+            parent_link = temp_list[0]
+            for (joint_name, child_link_name) in self.urdf.child_map[parent_link.name]:
+                
+                child_link = self.urdf.link_map[child_link_name]
+                if child_link_name in self.urdf.child_map:
+                    temp_list.append(child_link)
+                
+                # Call function to do parenting
+                urdf_joint = URDFJoint(self.urdf.joint_map[joint_name], self.urdf)
+                self.joints.append(urdf_joint)
+                urdf_joint.build(ob, parent_link,child_link)
+            temp_list.pop(0)
 
         # Create a bone
 
