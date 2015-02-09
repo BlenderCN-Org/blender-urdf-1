@@ -67,16 +67,20 @@ class URDFLink:
 		# TODO: Load mesh from file
 		geometry = self.urdf_link.visual.geometry
 		# If it is a box
-		print(geometry)
 		if isinstance(geometry, Box):
+			print('Box type')
+
 			# Add box mesh with size of box
 			bpy.ops.mesh.primitive_cube_add()
 			self.mesh_visual = bpy.context.selected_objects[0]
 			self.mesh_visual.dimensions = geometry.size
 
 		elif isinstance(geometry, Mesh):
-			bpy.ops.object.add(type="MESH")
-			self.mesh_collision = bpy.context.selected_objects[0]
+			print('Mesh type')
+			filepath = geometry.filename
+			bpy.ops.import_mesh.stl(directory= filepath)
+			self.mesh_visual = bpy.context.selected_objects[0]
+			
 
 		self.mesh_visual.name = self.frame.name + '_visual' 
 		self.mesh_visual.parent = self.frame
@@ -87,7 +91,6 @@ class URDFLink:
 		# TODO: Load mesh from file
 		geometry = self.urdf_link.collision.geometry
 		# If it is a box
-		print(geometry)
 		if isinstance(geometry, Box):
 			# Add box mesh with size of box
 			bpy.ops.mesh.primitive_cube_add()
@@ -103,7 +106,6 @@ class URDFLink:
 		if self.urdf_link.collision.origin:
 			self.mesh_collision.location = self.urdf_link.collision.origin.xyz
 			self.mesh_collision.rotation_quaternion = Euler(self.urdf_link.collision.origin.rpy, 'XYZ').to_quaternion()
-		# TODO: Load mesh from file
 
 
 	# Make empty parent of mesh
