@@ -33,6 +33,7 @@
 
 import sys
 sys.path.append('/usr/lib/python3/dist-packages')
+sys.path.append('/home/fxm/projects/miror/morse_install/lib/python3/dist-packages')
 
 
 
