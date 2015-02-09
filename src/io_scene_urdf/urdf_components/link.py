@@ -103,9 +103,3 @@ class URDFLink:
 		if self.urdf_link.collision.origin:
 			self.mesh_collision.location = self.urdf_link.collision.origin.xyz
 			self.mesh_collision.rotation_quaternion = Euler(self.urdf_link.collision.origin.rpy, 'XYZ').to_quaternion()
-		# TODO: Load mesh from file
-
-
-	# Make empty parent of mesh
-
-

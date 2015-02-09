@@ -17,10 +17,7 @@ class URDFArmature:
         # Find all links
         for link in self.urdf.links:
             self.links.append(URDFLink(link))
-        # # Find all joints and their corresponding parents and childs
-        # for joint in self.urdf.joints:
-        #     self.joints.append(URDFJoint(joint, self.urdf))
-        
+      
 
     def _walk_urdf(self, link, parent_joint = None):
         ''' Recursively build up bone structure starting from base link
