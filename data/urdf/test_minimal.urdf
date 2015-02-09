@@ -25,7 +25,7 @@
   
     <collision>
       <geometry name="Torso_visual_geom">
-        <mesh filename="package://nao_model/mesh/dae/Torso.dae"/>
+        <cylinder radius="0.1" length="1"/>
       </geometry>
     </collision>
   </link>
@@ -44,7 +44,7 @@
   
     <collision>
       <geometry name="Torso_visual_geom">
-        <mesh filename="package://nao_model/mesh/dae/Torso.dae"/>
+        <sphere radius="0.1"/>
       </geometry>
     </collision>
   </link>
