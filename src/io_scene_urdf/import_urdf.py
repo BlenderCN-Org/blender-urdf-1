@@ -43,8 +43,9 @@ def load(operator, context, filepath = ""):
 	print('Started')
 	
 	robot = URDF.load_from_file(filepath)
-	print(filepath)
-	print(robot)
+	#print(filepath)
+	#print(robot)
+	print('Finished reading urdf file, building 3D model now...')
 	
 	armature = URDFArmature(robot)
 	armature.build()
