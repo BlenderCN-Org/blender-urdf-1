@@ -11,7 +11,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-          <mesh filename="/home/nngoc/blender-urdf/data/mesh/atrv.stl"/>
+          <mesh filename="/home/nngoc//miror_workspace/miror/miror_description/meshes/environments/playground/plane_unit.stl"/>
       </geometry>
     </visual>
   </link>
