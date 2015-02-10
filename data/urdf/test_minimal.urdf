@@ -7,18 +7,25 @@
   <!-- Macro for insert a link visualization -->
   <!-- Macro for insert a link collision -->
   <!-- dummy first link, directly connects with torso -->
-  <link name="base_link"/>
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+          <mesh filename="/home/nngoc//miror_workspace/miror/miror_description/meshes/environments/playground/plane_unit.stl"/>
+      </geometry>
+    </visual>
+  </link>
   <link name="link1">
     <visual>
       <origin xyz="0 1 0" rpy="0 0 0"/>
       <geometry>
           <box size="0.1 0.2 0.1"/>
-        </geometry>
+      </geometry>
     </visual>
   
     <collision>
       <geometry name="Torso_visual_geom">
-        <mesh filename="package://nao_model/mesh/dae/Torso.dae"/>
+        <cylinder radius="0.1" length="1"/>
       </geometry>
     </collision>
   </link>
@@ -37,7 +44,7 @@
   
     <collision>
       <geometry name="Torso_visual_geom">
-        <mesh filename="package://nao_model/mesh/dae/Torso.dae"/>
+        <sphere radius="0.1"/>
       </geometry>
     </collision>
   </link>
