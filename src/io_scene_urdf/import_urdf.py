@@ -42,9 +42,10 @@ from morse.builder.urdf_components.link import URDFLink
 def load(operator, context, filepath = ""):
 	print('Started')
 	
-	robot = URDF.load_from_file(filepath)
+	# robot = URDF.load_from_file(filepath)
 	#print(filepath)
-	#print(robot)
+	robot = URDF.load_from_parameter_server('env_description')
+	print(robot)
 	print('Finished reading urdf file, building 3D model now...')
 	
 	armature = URDFArmature(robot)
