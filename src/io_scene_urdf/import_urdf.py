@@ -29,9 +29,9 @@ import copy
 # roslib
 # rospy
 
-#from io_scene_urdf.urdf_parser.urdf import URDF
-#from io_scene_urdf.urdf_components.armature import URDFArmature
-#from io_scene_urdf.urdf_components.link import URDFLink
+# from io_scene_urdf.urdf_parser.urdf import URDF
+# from io_scene_urdf.urdf_components.armature import URDFArmature
+# from io_scene_urdf.urdf_components.link import URDFLink
 
 from morse.builder.urdf_parser.urdf import URDF
 from morse.builder.urdf_components.armature import URDFArmature
@@ -41,14 +41,13 @@ from morse.builder.urdf_components.link import URDFLink
 
 def load(operator, context, filepath = ""):
 	print('Started')
+	# Add a lamp
+	lamp = bpy.ops.object.lamp_add(type='POINT', location=(1,1,20))
 	
-	# robot = URDF.load_from_file(filepath)
-	#print(filepath)
-	robot = URDF.load_from_parameter_server('env_description')
+	robot = URDF.load_from_file(filepath)
 	print(robot)
-	print('Finished reading urdf file, building 3D model now...')
-	
-	armature = URDFArmature(robot)
+	print(filepath)
+	armature = URDFArmature(robot, 'ENV')
 	armature.build()
 
 	
