@@ -2,6 +2,7 @@ import bpy, math
 from mathutils import Vector, Matrix, Euler
 import copy
 from io_scene_urdf.urdf_components.link import URDFLink
+# from morse.builder.urdf_components.link import URDFLink
 class URDFJoint:
 
     # cf urdf_parser_py.urdf.Joint.TYPES
@@ -75,7 +76,7 @@ class URDFJoint:
         if self.child == None:
             print('Invalid URDF file, couldn not find link ' + link.name + ' that is child of joint ' + self.name)
 
-    def build(self, armature, parent_link, child_link):
+    def build(self, parent_link, child_link):
 
         # Get according Blender objects
         self.parent_link = parent_link
@@ -83,12 +84,19 @@ class URDFJoint:
         self.parent_frame = bpy.data.objects[parent_link.name]
         self.child_frame = bpy.data.objects[child_link.name]
 
+
         # Make parental relationship
         self.child_frame.parent = self.parent_frame
 
         # Transform child using joint origin
         self.child_frame.location = self.xyz
         self.child_frame.rotation_quaternion = self.rot
+
+        if self.type == FIXED:
+            self.child_link.set_physics('STATIC')
+            
+        else:
+            self.child_link.set_physics('RIGID_BODY')
 
         
 

@@ -43,11 +43,12 @@ def load(operator, context, filepath = ""):
 	print('Started')
 	# Add a lamp
 	lamp = bpy.ops.object.lamp_add(type='POINT', location=(1,1,20))
+	# robot = URDF.load_from_parameter_server('robot_description')
 	
 	robot = URDF.load_from_file(filepath)
 	print(robot)
 	print(filepath)
-	armature = URDFArmature(robot, 'ENV')
+	armature = URDFArmature(robot, 'ROBOT')
 	armature.build()
 
 	
